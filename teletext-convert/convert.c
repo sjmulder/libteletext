@@ -1,12 +1,11 @@
 #include <teletext.h>
 #include <string.h>
-#include <getopt.h>
 #include <err.h>
 #include <sysexits.h>
 #include <stdio.h>
 
 static const char usage[] =
-"usage: teletext-convert -T in-format -O out-format [in-file] [out-file]\n"
+"usage: teletext-convert in-format out-format [in-file] [out-file]\n"
 "  input formats:  nos-html nos-json \n"
 "  output formats: nos-html xml ascii ansi";
 
@@ -62,25 +61,18 @@ main(int argc, char **argv)
 	char *in_path = NULL;
 	char *out_path = NULL;
 
-	while ((c = getopt(argc, argv, "?T:O:")) != -1)
-		switch (c) {
-		case 'T': input_format = optarg; break;
-		case 'O': output_format = optarg; break;
-		case '?': puts(usage); return 0;
-		default: return EX_USAGE;
-		}
+	if (argc < 3) {
+		puts(usage);
+		return EX_USAGE;
+	}
 
-	if (!input_format)
-		errx(EX_USAGE, "missing required -T flag");
-	if (!output_format)
-		errx(EX_USAGE, "missing required -O flag");
+	input_format = argv[1];
+	output_format = argv[2];
 
-	if (optind < argc)
-		in_path = argv[optind];
-	if (optind+1 < argc)
-		out_path = argv[optind+1];
-	if (optind+2 < argc)
-		errx(EX_USAGE, "too many arguments");
+	if (argc > 3)
+		in_path = argv[3];
+	if (argc > 4)
+		out_path = argv[4];
 
 	read_file(in_path, in_buf, sizeof(in_buf));
 
