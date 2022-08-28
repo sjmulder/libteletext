@@ -6,22 +6,22 @@ project(libteletext C)
 pkg_search_module(JSON_C REQUIRED json-c)
 
 add_library(teletext SHARED
-        libteletext/page.c
-        libteletext/page_nos.c
-        libteletext/util.c)
+    libteletext/page.c
+    libteletext/page_nos.c
+    libteletext/util.c)
 
 target_include_directories(teletext
-        PUBLIC libteletext/include
-        PUBLIC ${JSON_C_INCLUDE_DIRS})
+    PUBLIC libteletext/include
+    PUBLIC ${JSON_C_INCLUDE_DIRS})
 
 target_link_libraries(teletext
-        ${JSON_C_LINK_LIBRARIES})
+    ${JSON_C_LINK_LIBRARIES})
 
 add_executable(teletext-convert
-        teletext-convert/convert.c)
+    teletext-convert/convert.c)
 
 target_include_directories(teletext-convert
-        PUBLIC libteletext/include)
+    PUBLIC libteletext/include)
 
 target_link_libraries(teletext-convert
-        teletext)
+    teletext)
