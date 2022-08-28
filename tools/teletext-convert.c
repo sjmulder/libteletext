@@ -61,7 +61,7 @@ main(int argc, char **argv)
 	char *in_path = NULL;
 	char *out_path = NULL;
 
-	if (argc < 3) {
+	if (argc < 3 || argc > 5) {
 		puts(usage);
 		return EX_USAGE;
 	}
