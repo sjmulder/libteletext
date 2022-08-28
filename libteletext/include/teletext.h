@@ -11,7 +11,7 @@
     X(TT_BAD_ARG,	"Bad argument")				\
     X(TT_BAD_SIZE,	"Insufficient buffer size")		\
     X(TT_BAD_RANGE,	"Index out of range")			\
-    X(TT_BAD_DATA,	"Bad samples")				\
+    X(TT_BAD_DATA,	"Bad data")				\
     X(TT_CURL_ERROR,	"An error occurred in libcurl")
 
 #define X(Name, Str) Name,
