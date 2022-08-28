@@ -11,7 +11,8 @@
     X(TT_BAD_ARG,	"Bad argument")				\
     X(TT_BAD_SIZE,	"Insufficient buffer size")		\
     X(TT_BAD_RANGE,	"Index out of range")			\
-    X(TT_BAD_DATA,	"Bad samples")
+    X(TT_BAD_DATA,	"Bad samples")				\
+    X(TT_CURL_ERROR,	"An error occurred in libcurl")
 
 #define X(Name, Str) Name,
 enum { TT_LIST_ERRORS };
@@ -68,5 +69,6 @@ int tt_page_to_ansi(const struct tt_page *, char *buf, size_t buf_sz);
 int tt_page_to_nos_html(const struct tt_page *, char *buf, size_t buf_sz);
 int tt_page_from_nos_html(const char *html, struct tt_page *);
 int tt_page_from_nos_json(const char *json, struct tt_page *);
+int tt_page_from_nos_api(uint8_t page_no, uint8_t sub_no, struct tt_page *);
 
 #endif

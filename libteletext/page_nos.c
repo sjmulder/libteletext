@@ -3,9 +3,18 @@
 #include <string.h>
 #include <ctype.h>
 #include <json-c/json.h>
+#include <curl/curl.h>
 #include "private.h"
 
+#define API_USER_AGENT	"libteletext (+https://sjmulder.nl)"
+#define API_ENDPOINT	"http://teletekst-data.nos.nl/json/"
+
 #define LEN(a)  (sizeof(a)/sizeof(*(a)))
+
+struct string_buf {
+	char *p;
+	size_t sz, len;
+};
 
 #define HTML_ENTITY_LIST \
     /* special */					\
@@ -88,6 +97,17 @@ static const struct tt_cell blank_cell = {
 		.fg_color = TT_COLOR_WHITE
 	}
 };
+
+static size_t
+string_buf_write(char *data, size_t sz, size_t nmemb, struct string_buf *buf)
+{
+	if (sz * nmemb > buf->sz - buf->len)
+		nmemb = (buf->len - buf->sz) / sz;
+
+	memcpy(buf->p + buf->len, data, nmemb * sz);
+
+	return sz * nmemb;
+}
 
 static const char *
 find_space(const char *s, const char *end)
@@ -341,6 +361,53 @@ cleanup:
 		json_object_put(root);
 	if (tokener)
 		json_tokener_free(tokener);
+
+	return err;
+}
+
+int
+tt_page_from_nos_api(uint8_t page_no, uint8_t sub_no, struct tt_page *page)
+{
+	static char buf_data[4096];
+
+	int err = TT_OK;
+	char url[256];
+	CURL *curl = NULL;
+	struct curl_slist *headers = NULL;
+	struct string_buf buf;
+
+	snprintf(url, sizeof(url), API_ENDPOINT "%d-%d", page_no, sub_no);
+
+	if (!(curl = curl_easy_init())) {
+		err = TT_CURL_ERROR;
+		goto cleanup;
+	}
+
+	memset(&buf, 0, sizeof(buf));
+	buf.p = buf_data;
+	buf.sz = sizeof(buf_data);
+
+	curl_easy_setopt(curl, CURLOPT_USERAGENT, API_USER_AGENT);
+	curl_easy_setopt(curl, CURLOPT_URL, url);
+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, string_buf_write);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, buf);
+
+	headers = curl_slist_append(headers,
+	    "Accept-Encoding: application/json");
+	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+	if (curl_easy_perform(curl) != CURLE_OK) {
+		err = TT_CURL_ERROR;
+		goto cleanup;
+	}
+
+	err = tt_page_from_nos_json(buf_data, page);
+
+cleanup:
+	if (headers)
+		curl_slist_free_all(headers);
+	if (curl)
+		curl_easy_cleanup(curl);
 
 	return err;
 }

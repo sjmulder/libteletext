@@ -3,6 +3,7 @@ include(FindPkgConfig)
 
 project(libteletext C)
 
+find_package(CURL REQUIRED)
 pkg_search_module(JSON_C REQUIRED json-c)
 
 add_library(teletext SHARED
@@ -12,10 +13,12 @@ add_library(teletext SHARED
 
 target_include_directories(teletext
     PUBLIC libteletext/include
-    PUBLIC ${JSON_C_INCLUDE_DIRS})
+    PUBLIC ${JSON_C_INCLUDE_DIRS}
+    PUBLIC ${CURL_INCLUDE_DIRS})
 
 target_link_libraries(teletext
-    ${JSON_C_LINK_LIBRARIES})
+    ${JSON_C_LINK_LIBRARIES}
+    ${CURL_LIBRARIES})
 
 add_executable(teletext-convert
     teletext-convert/convert.c)
