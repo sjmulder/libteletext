@@ -32,7 +32,7 @@ read_file(const char *path, char *buf, size_t buf_sz)
 }
 
 static void
-write_file(const char *path, char *buf, size_t buf_len)
+write_file(const char *path, char *buf)
 {
 	FILE *file;
 
@@ -100,6 +100,6 @@ main(int argc, char **argv)
 	if (ret)
 		errx(1, "output error: %s", tt_strerror(ret));
 
-	write_file(out_path, out_buf, strlen(out_buf));
+	write_file(out_path, out_buf);
 	return 0;
 }
