@@ -7,7 +7,7 @@
 #include "private.h"
 
 #define API_USER_AGENT	"libteletext (+https://sjmulder.nl)"
-#define API_ENDPOINT	"http://teletekst-data.nos.nl/json/"
+#define API_ENDPOINT	"https://teletekst-data.nos.nl/json/"
 
 #define LEN(a)  (sizeof(a)/sizeof(*(a)))
 
@@ -101,10 +101,12 @@ static const struct tt_cell blank_cell = {
 static size_t
 string_buf_write(char *data, size_t sz, size_t nmemb, struct string_buf *buf)
 {
-	if (sz * nmemb > buf->sz - buf->len)
-		nmemb = (buf->len - buf->sz) / sz;
+	if (sz * nmemb > buf->sz - buf->len -1)
+		nmemb = (buf->sz - buf->len -1) / sz;
 
 	memcpy(buf->p + buf->len, data, nmemb * sz);
+	buf->len += sz * nmemb;
+	buf->p[buf->len] = '\0';
 
 	return sz * nmemb;
 }
@@ -368,7 +370,7 @@ cleanup:
 int
 tt_page_from_nos_api(uint8_t page_no, uint8_t sub_no, struct tt_page *page)
 {
-	static char buf_data[4096];
+	static char buf_data[16*1024];
 
 	int err = TT_OK;
 	char url[256];
@@ -390,7 +392,7 @@ tt_page_from_nos_api(uint8_t page_no, uint8_t sub_no, struct tt_page *page)
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, API_USER_AGENT);
 	curl_easy_setopt(curl, CURLOPT_URL, url);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, string_buf_write);
-	curl_easy_setopt(curl, CURLOPT_WRITEDATA, buf);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buf);
 
 	headers = curl_slist_append(headers,
 	    "Accept-Encoding: application/json");
