@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.18.1)
 project(libteletext C)
 
 add_library(teletext
-        libteletext/teletext.c
-        libteletext/util.c
-        libteletext/nos.c)
+        libteletext/page.c
+        libteletext/page_nos.c
+        libteletext/util.c)
 
 target_include_directories(teletext
         PUBLIC libteletext/include)

@@ -1,7 +1,7 @@
 #include <teletext.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include "util.h"
+#include "private.h"
 
 void
 tt_buf_append_char(char *buf, size_t buf_sz, size_t *pos, char c)

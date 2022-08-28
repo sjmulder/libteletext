@@ -1,6 +1,6 @@
 #include <teletext.h>
 #include <stdio.h>
-#include "util.h"
+#include "private.h"
 
 #define LEN(a)  (sizeof(a)/sizeof(*(a)))
 

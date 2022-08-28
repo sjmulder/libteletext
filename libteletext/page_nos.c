@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "util.h"
+#include "private.h"
 
 #define LEN(a)  (sizeof(a)/sizeof(*(a)))
 
