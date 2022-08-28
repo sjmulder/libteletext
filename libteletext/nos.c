@@ -191,6 +191,7 @@ int
 tt_page_to_nos_html(const struct tt_page *page, char *buf, size_t buf_sz)
 {
 	int row, col;
+	int in_span=0;
 	size_t pos=0;
 	struct tt_attrs prev_attrs;
 	const struct tt_cell *cur;
@@ -204,13 +205,19 @@ tt_page_to_nos_html(const struct tt_page *page, char *buf, size_t buf_sz)
 	for (col = 0; col < TT_NUM_COLS; col++) {
 		cur = &page->cells[row][col];
 
-		if (col == 0)
+		if (col == 0) {
 			prev_attrs = blank_cell.attrs;
+			in_span = 0;
+		}
 
-		if (!memcmp(&cur->attrs, &prev_attrs, sizeof(prev_attrs))) {
+		if (memcmp(&cur->attrs, &prev_attrs, sizeof(prev_attrs)) != 0) {
 			attrs_to_classnames(cur->attrs, &fg_class, &bg_class);
+			if (in_span)
+				tt_buf_append_str(buf, buf_sz, &pos, "</span>");
 			tt_buf_append_fmt(buf, buf_sz, &pos,
-			    "<span class=\"%s %s\">", fg_class, bg_class);
+			    "<span class=\"%s %s\">",
+			    fg_class, bg_class);
+			in_span = 1;
 			prev_attrs = cur->attrs;
 		}
 
