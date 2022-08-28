@@ -159,10 +159,10 @@ attrs_to_classnames(
 #undef X
 }
 
-static struct tt_attrs
-classnames_to_attrs(const char *classes, const char *end)
+static void
+classnames_to_attrs(const char *classes, const char *end,
+    struct tt_attrs *attrs)
 {
-	struct tt_attrs attrs = blank_cell.attrs;
 	const char *p;
 	const char *word_end;
 	size_t len;
@@ -176,15 +176,13 @@ classnames_to_attrs(const char *classes, const char *end)
 		len = word_end - p;
 
 #define X(Name, Str) \
-	if (!strncmp(p, Str, len)) attrs.fg_color = Name; else \
-	if (!strncmp(p, "bg-" Str, len)) attrs.bg_color = Name; else
+	if (!strncmp(p, Str, len)) attrs->fg_color = Name; else \
+	if (!strncmp(p, "bg-" Str, len)) attrs->bg_color = Name; else
 		HTML_COLOR_LIST ;
 #undef X
 
 		p = word_end;
 	}
-
-	return attrs;
 }
 
 int
@@ -293,8 +291,8 @@ tt_page_from_nos_html(const char *html, struct tt_page *page)
 			if (stack_depth <= LEN(attrs_stack))
 				attrs_stack[stack_depth-1] = attrs;
 			if (open_quotes)
-				attrs = classnames_to_attrs(open_quotes+1,
-				    close_quotes);
+				classnames_to_attrs(open_quotes+1, close_quotes,
+				    &attrs);
 		} else {
 			wc = html_get_cp(p, &p);
 			col++;
