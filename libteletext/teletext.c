@@ -125,7 +125,7 @@ tt_page_to_ascii(const struct tt_page *page, char *buf, size_t buf_sz)
 		ascii = tt_char_to_ascii(cur->ch);
 		tt_buf_append_char(buf, buf_sz, &pos, ascii);
 
-		if (col == 79)
+		if (col == TT_NUM_COLS-1)
 			tt_buf_append_char(buf, buf_sz, &pos, '\n');
 	}
 
@@ -162,8 +162,8 @@ tt_page_to_ansi(const struct tt_page *page, char *buf, size_t buf_sz)
 		ascii = tt_char_to_ascii(cur->ch);
 		tt_buf_append_char(buf, buf_sz, &pos, ascii);
 
-		if (col == 79)
-			tt_buf_append_str(buf, buf_sz, &pos, "\n\033[0m");
+		if (col == TT_NUM_COLS-1)
+			tt_buf_append_str(buf, buf_sz, &pos, "\033[0m\n");
 	}
 
 	return tt_buf_terminate(buf, buf_sz, pos); // NOLINT(readability-misleading-indentation)

@@ -54,7 +54,7 @@ struct tt_page {
 	uint8_t page_no;
 	uint8_t sub_no;
 #define TT_NUM_ROWS	24
-#define TT_NUM_COLS	80
+#define TT_NUM_COLS	40
 	struct tt_cell cells[TT_NUM_ROWS][TT_NUM_COLS];
 };
 
