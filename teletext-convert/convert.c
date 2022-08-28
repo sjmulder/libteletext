@@ -8,7 +8,7 @@
 static const char usage[] =
 "usage: teletext-convert -T in-format -O out-format [in-file] [out-file]\n"
 "  input formats:  nos-html\n"
-"  output formats: text ansi nos-html";
+"  output formats: nos-html xml text ansi";
 
 static size_t
 read_file(const char *path, char *buf, size_t buf_sz)
@@ -53,7 +53,7 @@ int
 main(int argc, char **argv)
 {
 	static char in_buf[16*1024];
-	static char out_buf[16*1024];
+	static char out_buf[256*1024];
 	static struct tt_page page;
 
 	int c, ret;
@@ -92,12 +92,14 @@ main(int argc, char **argv)
 	if (ret)
 		errx(1, "parsing error: %s", tt_strerror(ret));
 
-	if (!strcmp(output_format, "text"))
+	if (!strcmp(output_format, "nos-html"))
+		ret = tt_page_to_nos_html(&page, out_buf, sizeof(out_buf));
+	else if (!strcmp(output_format, "xml"))
+		ret = tt_page_to_xml(&page, out_buf, sizeof(out_buf));
+	else if (!strcmp(output_format, "text"))
 		ret = tt_page_to_ascii(&page, out_buf, sizeof(out_buf));
 	else if (!strcmp(output_format, "ansi"))
 		ret = tt_page_to_ansi(&page, out_buf, sizeof(out_buf));
-	else if (!strcmp(output_format, "nos-html"))
-		ret = tt_page_to_nos_html(&page, out_buf, sizeof(out_buf));
 
 	if (ret)
 		errx(1, "output error: %s", tt_strerror(ret));

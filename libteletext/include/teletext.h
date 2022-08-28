@@ -62,6 +62,7 @@ const char *tt_strerror(int code);
 
 char tt_char_to_ascii(struct tt_char ch);
 
+int tt_page_to_xml(const struct tt_page *, char *buf, size_t buf_sz);
 int tt_page_to_ascii(const struct tt_page *, char *buf, size_t buf_sz);
 int tt_page_to_ansi(const struct tt_page *, char *buf, size_t buf_sz);
 int tt_page_to_nos_html(const struct tt_page *, char *buf, size_t buf_sz);
