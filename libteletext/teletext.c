@@ -15,7 +15,7 @@ static const char g0_latin_ascii_map[] =
     "#3CScs"
     "@4DTdt"
     "%5EUeu"
-    "&5FVfv"
+    "&6FVfv"
     "'7GWgw"
     "(8HXhx"
     ")9IYiy"
