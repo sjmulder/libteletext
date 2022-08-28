@@ -80,8 +80,10 @@ tt_page_to_xml(const struct tt_page *page, char *buf, size_t buf_sz)
 	if (!page || !buf)
 		return TT_BAD_ARG;
 
-	tt_buf_append_str(buf, buf_sz, &pos, "<?xml version=\"1.0\">\n");
-	tt_buf_append_str(buf, buf_sz, &pos, "<page>\n");
+	tt_buf_append_fmt(buf, buf_sz, &pos,
+	    "<?xml version=\"1.0\">\n"
+	    "<page num=\"%d\" sub=\"%d\">\n",
+	    page->page_no, page->sub_no);
 
 	for (row = 0; row < TT_NUM_ROWS; row++)
 	for (col = 0; col < TT_NUM_COLS; col++) {
