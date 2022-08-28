@@ -276,15 +276,20 @@ tt_page_from_nos_html(const char *html, struct tt_page *page)
 				stack_depth--;
 		} else if (p[0] == '<') {
 			p++;
-			if ((open_quotes = strchr(p, '"'))) {
-				p = open_quotes+1;
-				if (!(close_quotes = strchr(p, '"')))
+
+			open_quotes = strchr(p, '"');
+			close_bracket = strchr(p, '>');
+
+			if (!close_bracket)
+				return TT_BAD_DATA;
+			if (open_quotes && open_quotes > close_bracket)
+				open_quotes = NULL;
+			if (open_quotes) {
+				close_quotes = strchr(open_quotes+1, '"');
+				if (!close_quotes)
 					return TT_BAD_DATA;
-				p = close_quotes+1;
 			}
 
-			if (!(close_bracket = strchr(p, '>')))
-				return TT_BAD_DATA;
 			p = close_bracket+1;
 
 			stack_depth++;
