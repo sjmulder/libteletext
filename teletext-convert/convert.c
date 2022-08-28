@@ -8,7 +8,7 @@
 static const char usage[] =
 "usage: teletext-convert -T in-format -O out-format [in-file] [out-file]\n"
 "  input formats:  nos-html\n"
-"  output formats: nos-html xml text ansi";
+"  output formats: nos-html xml ascii ansi";
 
 static size_t
 read_file(const char *path, char *buf, size_t buf_sz)
@@ -96,10 +96,12 @@ main(int argc, char **argv)
 		ret = tt_page_to_nos_html(&page, out_buf, sizeof(out_buf));
 	else if (!strcmp(output_format, "xml"))
 		ret = tt_page_to_xml(&page, out_buf, sizeof(out_buf));
-	else if (!strcmp(output_format, "text"))
+	else if (!strcmp(output_format, "ascii"))
 		ret = tt_page_to_ascii(&page, out_buf, sizeof(out_buf));
 	else if (!strcmp(output_format, "ansi"))
 		ret = tt_page_to_ansi(&page, out_buf, sizeof(out_buf));
+	else
+		errx(EX_USAGE, "unknown output format: %s", output_format);
 
 	if (ret)
 		errx(1, "output error: %s", tt_strerror(ret));
