@@ -295,12 +295,11 @@ tt_page_from_nos_html(const char *html, struct tt_page *page)
 				    &attrs);
 		} else {
 			wc = html_get_cp(p, &p);
-			col++;
-
 			if (col < TT_NUM_COLS) {
 				page->cells[row][col].ch = html_cp_to_char(wc);
 				page->cells[row][col].attrs = attrs;
 			}
+			col++;
 		}
 	}
 
