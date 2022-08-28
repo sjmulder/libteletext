@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <json-c/json.h>
 #include "private.h"
 
 #define LEN(a)  (sizeof(a)/sizeof(*(a)))
@@ -309,4 +310,37 @@ tt_page_from_nos_html(const char *html, struct tt_page *page)
 	}
 
 	return TT_OK;
+}
+
+int
+tt_page_from_nos_json(const char *json, struct tt_page *page)
+{
+	int err = TT_OK;
+	struct json_tokener *tokener = NULL;
+	struct json_object *root, *content;
+	const char *html;
+
+	if (!json || !page)
+		return TT_BAD_ARG;
+
+	tokener = json_tokener_new();
+	root = json_tokener_parse(json);
+
+	if (!root ||
+	    !json_object_is_type(root, json_type_object) ||
+	    !json_object_object_get_ex(root, "content", &content) ||
+	    !(html = json_object_get_string(content))) {
+		err = TT_BAD_DATA;
+		goto cleanup;
+	}
+
+	err = tt_page_from_nos_html(html, page);
+
+cleanup:
+	if (root)
+		json_object_put(root);
+	if (tokener)
+		json_tokener_free(tokener);
+
+	return err;
 }

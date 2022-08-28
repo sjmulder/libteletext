@@ -7,7 +7,7 @@
 
 static const char usage[] =
 "usage: teletext-convert -T in-format -O out-format [in-file] [out-file]\n"
-"  input formats:  nos-html\n"
+"  input formats:  nos-html nos-json \n"
 "  output formats: nos-html xml ascii ansi";
 
 static size_t
@@ -86,6 +86,8 @@ main(int argc, char **argv)
 
 	if (!strcmp(input_format, "nos-html"))
 		ret = tt_page_from_nos_html(in_buf, &page);
+	else if (!strcmp(input_format, "nos-json"))
+		ret = tt_page_from_nos_json(in_buf, &page);
 	else
 		errx(EX_USAGE, "unknown input format: %s", input_format);
 
