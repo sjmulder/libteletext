@@ -6,6 +6,8 @@ project(libteletext C)
 find_package(CURL REQUIRED)
 pkg_search_module(JSON_C REQUIRED json-c)
 
+# libteletext
+
 add_library(teletext SHARED
     libteletext/page.c
     libteletext/page_nos.c
@@ -20,8 +22,10 @@ target_link_libraries(teletext
     ${JSON_C_LINK_LIBRARIES}
     ${CURL_LIBRARIES})
 
+# teletext-convert
+
 add_executable(teletext-convert
-    teletext-convert/convert.c)
+    tools/teletext-convert.c)
 
 target_include_directories(teletext-convert
     PUBLIC libteletext/include)
