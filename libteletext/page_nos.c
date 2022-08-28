@@ -368,7 +368,7 @@ cleanup:
 }
 
 int
-tt_page_from_nos_api(uint8_t page_no, uint8_t sub_no, struct tt_page *page)
+tt_page_from_nos_api(uint16_t page_no, uint8_t sub_no, struct tt_page *page)
 {
 	static char buf_data[16*1024];
 

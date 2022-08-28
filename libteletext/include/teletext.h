@@ -52,7 +52,7 @@ struct tt_cell {
 };
 
 struct tt_page {
-	uint8_t page_no;
+	uint16_t page_no;
 	uint8_t sub_no;
 #define TT_NUM_ROWS	24
 #define TT_NUM_COLS	40
@@ -69,6 +69,6 @@ int tt_page_to_ansi(const struct tt_page *, char *buf, size_t buf_sz);
 int tt_page_to_nos_html(const struct tt_page *, char *buf, size_t buf_sz);
 int tt_page_from_nos_html(const char *html, struct tt_page *);
 int tt_page_from_nos_json(const char *json, struct tt_page *);
-int tt_page_from_nos_api(uint8_t page_no, uint8_t sub_no, struct tt_page *);
+int tt_page_from_nos_api(uint16_t page_no, uint8_t sub_no, struct tt_page *);
 
 #endif

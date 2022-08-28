@@ -22,7 +22,7 @@ main(int argc, char **argv)
 	}
 
 	page_no = (int)strtol(argv[2], NULL, 10);
-	if (page_no < 0 || page_no > UINT8_MAX)
+	if (page_no < 0 || page_no > UINT16_MAX)
 		errx(1, "bad page number: %s", argv[2]);
 
 	if (strcmp(argv[1], "nos") == 0)
