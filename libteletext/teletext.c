@@ -105,13 +105,7 @@ tt_page_to_xml(const struct tt_page *page, char *buf, size_t buf_sz)
 
 	tt_buf_append_str(buf, buf_sz, &pos, "</page>\n"); // NOLINT(readability-misleading-indentation)
 
-	if (pos >= buf_sz) {
-		buf[buf_sz-1] = '\0';
-		return TT_BAD_SIZE;
-	}
-
-	buf[pos] = '\0';
-	return TT_OK;
+	return tt_buf_terminate(buf, buf_sz, pos);
 }
 
 int
@@ -135,13 +129,7 @@ tt_page_to_ascii(const struct tt_page *page, char *buf, size_t buf_sz)
 			tt_buf_append_char(buf, buf_sz, &pos, '\n');
 	}
 
-	if (pos >= buf_sz) { // NOLINT(readability-misleading-indentation)
-		buf[buf_sz-1] = '\0';
-		return TT_BAD_SIZE;
-	}
-
-	buf[pos] = '\0';
-	return TT_OK;
+	return tt_buf_terminate(buf, buf_sz, pos); // NOLINT(readability-misleading-indentation)
 }
 
 int
@@ -178,12 +166,6 @@ tt_page_to_ansi(const struct tt_page *page, char *buf, size_t buf_sz)
 			tt_buf_append_str(buf, buf_sz, &pos, "\n\033[0m");
 	}
 
-	if (pos >= buf_sz) { // NOLINT(readability-misleading-indentation)
-		buf[buf_sz-1] = '\0';
-		return TT_BAD_SIZE;
-	}
-
-	buf[pos] = '\0';
-	return TT_OK;
+	return tt_buf_terminate(buf, buf_sz, pos); // NOLINT(readability-misleading-indentation)
 }
 

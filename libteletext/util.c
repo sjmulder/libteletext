@@ -32,3 +32,15 @@ tt_buf_append_fmt(char *buf, size_t buf_sz, size_t *pos, const char *fmt, ...)
 	if (*pos > buf_sz)
 		*pos = buf_sz;
 }
+
+int
+tt_buf_terminate(char *buf, size_t buf_sz, size_t pos)
+{
+	if (pos < buf_sz) {
+		buf[pos] = '\0';
+		return TT_OK;
+	} else {
+		buf[buf_sz-1] = '\0';
+		return TT_BAD_SIZE;
+	}
+}
