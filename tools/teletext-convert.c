@@ -42,7 +42,7 @@ write_file(const char *path, char *buf)
 	} else if (!(file = fopen(path, "w")))
 		err(1, "%s", path);
 
-	if (fwrite(buf, buf_len, 1, file) != 1)
+	if (fputs(buf, file) == EOF)
 		warn("%s", path);
 
 	fclose(file);
