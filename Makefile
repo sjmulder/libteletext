@@ -1,17 +1,17 @@
 all:
 	make -C libteletext
-	make -C tools
+	make -C teletext
 
 install:
 	make -C libteletext install
-	make -C tools install
+	make -C teletext install
 
 uninstall:
 	make -C libteletext uninstall
-	make -C tools uninstall
+	make -C teletext uninstall
 
 clean:
 	make -C libteletext clean
-	make -C tools clean
+	make -C teletext clean
 
 .PHONY: all install uninstall clean

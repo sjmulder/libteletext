@@ -3,5 +3,4 @@ cmake-*/
 *.swp
 *.o
 libteletext/libteletext.so
-tools/teletext
-tools/teletext-convert
+teletext/teletext
