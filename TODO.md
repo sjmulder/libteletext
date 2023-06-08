@@ -1,5 +1,11 @@
 Plans
 -----
+Services:
+ - [Teletekst Katwijk](http://server.rtvkatwijk.nl:8095/EXEC) (Netherlands)
+ - [RTVSLO](https://teletext.rtvslo.si/100/1) (Slovakia)
+ - [ARD Teletext im Ersten](https://www.ard-text.de/) (Germany)
+ - [ZDFtext](https://teletext.zdf.de/teletext/zdf/) (Germany)
+
 Features
  - Some sort of wire exchange format to facilitate API proxy
  - API proxy
