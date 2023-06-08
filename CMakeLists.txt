@@ -25,7 +25,7 @@ target_link_libraries(libteletext
     ${JSON_C_LINK_LIBRARIES}
     ${CURL_LIBRARIES})
 
-# teletext-convert
+# teletext
 
 add_executable(teletext
     tools/teletext.c)
