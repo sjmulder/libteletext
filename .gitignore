@@ -1,2 +1,6 @@
 .idea/
 cmake-*/
+*.o
+libteletext/libteletext.so
+tools/teletext
+tools/teletext-convert
