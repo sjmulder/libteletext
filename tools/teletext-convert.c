@@ -55,7 +55,7 @@ main(int argc, char **argv)
 	static char out_buf[256*1024];
 	static struct tt_page page;
 
-	int c, ret;
+	int ret;
 	char *input_format = NULL;
 	char *output_format = NULL;
 	char *in_path = NULL;
