@@ -7,14 +7,15 @@ Services:
  - [ZDFtext](https://teletext.zdf.de/teletext/zdf/) (Germany)
 
 Features
- - Some sort of wire exchange format to facilitate API proxy
+ x Some sort of wire exchange format to facilitate API proxy
+     that's the XML format
  - API proxy
  - Interactive mode in CLI
 
 Library wrappers:
  - .NET
  - Swift
- - C++
+ x C++
 
 Platforms:
  - GTK or Qt GUI
