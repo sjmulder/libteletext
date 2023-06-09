@@ -37,5 +37,6 @@ General:
 
 NOS:
  - Sixel characters are not mapped.
+ - Accented characters are not mapped.
  - Sometimes blank character at start of line instead of background
    color.
