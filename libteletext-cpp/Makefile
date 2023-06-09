@@ -2,11 +2,8 @@ SRCROOT=	..
 
 include ../common.mk
 
-LIB?=		libteletext.so
-OBJ=		page.o page_nos.o util.o
-
-CFLAGS+=	-fPIC
-LDLIBS+=	-ljson-c -lcurl
+LIB?=		libteletext-cpp.a
+OBJ=		libteletext-cpp.o
 
 all: ${LIB}
 
@@ -21,10 +18,6 @@ clean:
 	rm -f ${LIB} *.o
 
 ${LIB}: ${OBJ}
-	${LINK.cc} -shared -o ${LIB} ${OBJ} ${LDLIBS}
-
-page.o:		include/teletext.h private.h
-page_nos.o:	include/teletext.h private.h
-util.o:		include/teletext.h private.h
+	${AR} ${ARFLAGS} ${LIB} ${OBJ}
 
 .PHONY: all install uninstall clean

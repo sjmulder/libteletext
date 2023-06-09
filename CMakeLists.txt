@@ -11,8 +11,7 @@ pkg_search_module(JSON_C REQUIRED json-c)
 add_library(libteletext SHARED
     libteletext/page.c
     libteletext/page_nos.c
-    libteletext/util.c
-    libteletext/cpp.cc)
+    libteletext/util.c)
 
 set_target_properties(libteletext PROPERTIES
     OUTPUT_NAME teletext)
@@ -25,6 +24,17 @@ target_include_directories(libteletext
 target_link_libraries(libteletext
     ${JSON_C_LINK_LIBRARIES}
     ${CURL_LIBRARIES})
+
+# libteletext-cpp
+
+add_library(libteletext-cpp STATIC
+    libteletext-cpp/libteletext-cpp.cc)
+
+set_target_properties(libteletext-cpp PROPERTIES
+    OUTPUT_NAME teletext-cpp)
+
+target_include_directories(libteletext-cpp
+    PUBLIC libteletext/include)
 
 # teletext
 
@@ -46,4 +56,5 @@ target_include_directories(test-cpp
     PUBLIC libteletext/include)
 
 target_link_libraries(test-cpp
-    libteletext)
+    libteletext
+    libteletext-cpp)

@@ -3,5 +3,6 @@ cmake-*/
 *.swp
 *.o
 libteletext/libteletext.so
+libteletext-cpp/libteletext-cpp.a
 teletext/teletext
 tests/test-cpp
