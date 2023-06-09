@@ -1,16 +1,12 @@
-DESTDIR?=
-PREFIX?=	/usr/local
+SRCROOT=	..
 
-LIB=	libteletext.so
-OBJ=	page.o page_nos.o util.o cpp.o
+include ../common.mk
 
-CFLAGS+=	-Wall -Wextra
+LIB?=		libteletext.so
+OBJ=		page.o page_nos.o util.o cpp.o
+
 CFLAGS+=	-fPIC
-CFLAGS+=	-I./include
-
-CXXFLAGS+=	-Wall -Wextra
 CXXFLAGS+=	-fPIC
-CXXFLAGS+=	-I./include
 
 all: ${LIB}
 

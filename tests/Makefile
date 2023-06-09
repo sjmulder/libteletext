@@ -1,14 +1,8 @@
-PROGS=	test-cpp
+SRCROOT=	..
 
-CFLAGS+=	-Wall -Wextra
-CFLAGS+=	-I../libteletext/include
+include ../common.mk
 
-CXXFLAGS+=	-Wall -Wextra
-CXXFLAGS+=	-I../libteletext/include
-
-LDFLAGS+=	-L../libteletext
-LDFLAGS+=	-Wl,-rpath=../libteletext
-LDFLAGS+=	-Wl,-rpath=${PREFIX}/lib
+PROGS=		test-cpp
 
 LDLIBS+=	-lteletext -ljson-c -lcurl
 

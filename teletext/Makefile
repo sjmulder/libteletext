@@ -1,15 +1,9 @@
-DESTDIR?=
-PREFIX?=	/usr/local
+SRCROOT=	..
 
-PROG=	teletext
-OBJ=	teletext.o
+PROG?=		teletext
+OBJ=		teletext.o
 
-CFLAGS+=	-Wall -Wextra
-CFLAGS+=	-I../libteletext/include
-
-LDFLAGS+=	-L../libteletext
-LDFLAGS+=	-Wl,-rpath=../libteletext
-LDFLAGS+=	-Wl,-rpath=${PREFIX}/lib
+include ../common.mk
 
 LDLIBS+=	-lteletext -ljson-c -lcurl
 
