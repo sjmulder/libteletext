@@ -19,9 +19,6 @@ uninstall:
 clean:
 	rm -f ${PROG} *.o
 
-${PROG}: ${OBJ}
-	${LINK.cc} -o ${PROG} ${OBJ} ${LDLIBS}
-
 teletext.o:	../libteletext/include/teletext.h
 
 .PHONY: all clean
