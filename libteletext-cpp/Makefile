@@ -20,4 +20,6 @@ clean:
 ${LIB}: ${OBJ}
 	${AR} ${ARFLAGS} ${LIB} ${OBJ}
 
+libteletext-cpp.o:	../libteletext/include/teletext.h
+
 .PHONY: all install uninstall clean
