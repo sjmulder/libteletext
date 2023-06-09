@@ -148,6 +148,7 @@ tt_page_to_ansi(const struct tt_page *page, char *buf, size_t buf_sz)
 		cur = &page->cells[row][col];
 
 		if (!prev ||
+		    col == 0 ||	/* attrs seem to be reset at newline */
 		    cur->attrs.bg_color != prev->attrs.bg_color ||
 		    cur->attrs.fg_color != prev->attrs.fg_color) {
 			if (cur->attrs.bg_color > 7 || cur->attrs.fg_color > 7)
