@@ -123,7 +123,7 @@ main(int argc, char **argv)
 		if (strcmp(service, "nos") == 0)
 			ret = tt_page_from_nos_api(page_no, 1, &page);
 		else
-			errx(1, "unkown service: %s", service);
+			errx(1, "unknown service: %s", service);
 
 		if (ret)
 			errx(1, "input error: %s", tt_strerror(ret));
