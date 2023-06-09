@@ -7,6 +7,7 @@ OBJ=		page.o page_nos.o util.o cpp.o
 
 CFLAGS+=	-fPIC
 CXXFLAGS+=	-fPIC
+LDLIBS+=	-ljson-c -lcurl
 
 all: ${LIB}
 
@@ -21,7 +22,7 @@ clean:
 	rm -f ${LIB} *.o
 
 ${LIB}: ${OBJ}
-	${LINK.cc} -shared -o ${LIB} ${OBJ}
+	${LINK.cc} -shared -o ${LIB} ${OBJ} ${LDLIBS}
 
 page.o:		include/teletext.h private.h
 page_nos.o:	include/teletext.h private.h

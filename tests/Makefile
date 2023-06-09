@@ -4,7 +4,7 @@ include ../common.mk
 
 PROGS=		test-cpp
 
-LDLIBS+=	-lteletext -ljson-c -lcurl
+LDLIBS+=	-lteletext
 
 all: ${PROGS}
 

@@ -5,7 +5,7 @@ OBJ=		teletext.o
 
 include ../common.mk
 
-LDLIBS+=	-lteletext -ljson-c -lcurl
+LDLIBS+=	-lteletext
 
 all: ${PROG}
 
