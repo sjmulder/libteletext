@@ -4,3 +4,4 @@ cmake-*/
 *.o
 libteletext/libteletext.so
 teletext/teletext
+tests/test-cpp

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18.1)
 include(FindPkgConfig)
 
-project(libteletext C)
+project(libteletext C CXX)
 
 find_package(CURL REQUIRED)
 pkg_search_module(JSON_C REQUIRED json-c)
@@ -11,7 +11,8 @@ pkg_search_module(JSON_C REQUIRED json-c)
 add_library(libteletext SHARED
     libteletext/page.c
     libteletext/page_nos.c
-    libteletext/util.c)
+    libteletext/util.c
+    libteletext/cpp.cc)
 
 set_target_properties(libteletext PROPERTIES
     OUTPUT_NAME teletext)
@@ -34,4 +35,15 @@ target_include_directories(teletext
     PUBLIC libteletext/include)
 
 target_link_libraries(teletext
+    libteletext)
+
+# test-cpp
+
+add_executable(test-cpp
+    tests/test-cpp.cc)
+
+target_include_directories(test-cpp
+    PUBLIC libteletext/include)
+
+target_link_libraries(test-cpp
     libteletext)

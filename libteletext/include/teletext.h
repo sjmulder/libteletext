@@ -1,8 +1,17 @@
 #ifndef TELETEXT_H
 #define TELETEXT_H
 
-#include <stddef.h>
-#include <stdint.h>
+#ifndef __cplusplus
+# include <stddef.h>
+# include <stdint.h>
+#else
+# include <cstddef>
+# include <cstdint>
+# include <string>
+
+namespace teletext {
+extern "C" {
+#endif
 
 #define TT_LIST_ERRORS \
     X(TT_OK,		"Success")				\
@@ -71,4 +80,43 @@ int tt_page_from_nos_html(const char *html, struct tt_page *);
 int tt_page_from_nos_json(const char *json, struct tt_page *);
 int tt_page_from_nos_api(uint16_t page_no, uint8_t sub_no, struct tt_page *);
 
-#endif
+#ifdef __cplusplus
+}; /* extern C */
+
+class page {
+	struct tt_page data_ {};
+
+public:
+	page() = default;
+	page(const page &other) : data_(other.data()) {}
+	explicit page(const tt_page &data) : data_(data) {}
+
+	[[nodiscard]] tt_page &data() { return data_; }
+	[[nodiscard]] const tt_page &data() const { return data_; }
+
+	[[nodiscard]] std::string to_xml() const;
+	[[nodiscard]] std::string to_ascii() const;
+	[[nodiscard]] std::string to_ansi() const;
+	[[nodiscard]] std::string to_nos_html() const;
+};
+
+class teletext_error : public std::exception {
+	const char *msg_;
+public:
+	explicit teletext_error(const char *msg) : msg_(msg) {}
+	explicit teletext_error(std::string &msg) : msg_(msg.c_str()) {}
+	explicit teletext_error(int error) : msg_(tt_strerror(error)) {}
+
+	[[nodiscard]]
+	const char * what() const noexcept override { return msg_; }
+};
+
+void check_error(int error);
+
+page from_nos_html(const std::string &html);
+page from_nos_json(const std::string &json);
+page from_nos_api(int page_no, int sub_no);
+
+}; /* namespace */
+#endif /* C++ */
+#endif /* header guard */

@@ -2,11 +2,15 @@ DESTDIR?=
 PREFIX?=	/usr/local
 
 LIB=	libteletext.so
-OBJ=	page.o page_nos.o util.o
+OBJ=	page.o page_nos.o util.o cpp.o
 
 CFLAGS+=	-Wall -Wextra
 CFLAGS+=	-fPIC
 CFLAGS+=	-I./include
+
+CXXFLAGS+=	-Wall -Wextra
+CXXFLAGS+=	-fPIC
+CXXFLAGS+=	-I./include
 
 all: ${LIB}
 
@@ -26,5 +30,6 @@ ${LIB}: ${OBJ}
 page.o:		include/teletext.h private.h
 page_nos.o:	include/teletext.h private.h
 util.o:		include/teletext.h private.h
+cpp.o:		include/teletext.h
 
 .PHONY: all install uninstall clean

@@ -2,6 +2,7 @@ DESTDIR?=
 PREFIX?=	/usr/local
 
 PROG=	teletext
+OBJ=	teletext.o
 
 CFLAGS+=	-Wall -Wextra
 CFLAGS+=	-I../libteletext/include
@@ -23,6 +24,9 @@ uninstall:
 
 clean:
 	rm -f ${PROG} *.o
+
+${PROG}: ${OBJ}
+	${LINK.cc} -o ${PROG} ${OBJ} ${LDLIBS}
 
 teletext.o:	../libteletext/include/teletext.h
 
