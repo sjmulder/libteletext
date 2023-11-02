@@ -1,5 +1,6 @@
 .idea/
 cmake-*/
+build/
 *.swp
 *.o
 libteletext/libteletext.so
